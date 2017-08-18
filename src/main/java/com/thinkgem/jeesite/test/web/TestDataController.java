@@ -44,7 +44,6 @@ public class TestDataController extends BaseController {
 			entity = new TestData();
 		}
 
-		
 		return entity;
 	}
 	
