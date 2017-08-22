@@ -54,7 +54,8 @@
 		<webserver.port>8181</webserver.port>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<downloadSources>true</downloadSources>
-		
+
+		<quartz-scheduler.version>1.8.4</quartz-scheduler.version>
 	</properties>
 	
 	<!-- 设定主仓库，按设定顺序进行查找。此处使用阿里云的镜像服务 -->
@@ -637,6 +638,11 @@
 			<version>2.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz-scheduler.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
