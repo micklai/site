@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="messageTask" class="com.thinkgem.jeesite.modules.sys.task.MessageTask"></bean>
+
+    <bean id="msgDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="messageTask" />
+        <property name="targetMethod" value="sendMsg" />
+        <!--将并发设置为false-->
+        <property name="concurrent" value="false" />
+    </bean>
+
+    <bean id="trigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="msgDetail" />
+        <!--表达式，我的是每 30s 执行一次-->
+        <property name="cronExpression" value="0/10 * * * * ?" />
+    </bean>
+
+    <!--  总管理类如果将lazy-init='false'那么容器启动就会执行调度程序   -->
+    <bean id="startQuertz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false" >
+        <property name="triggers">
+            <list>
+                <!--作业调度器,list下可加入其他的调度器-->
+                <ref bean="trigger" />
+            </list>
+        </property>
+    </bean>
+</beans>

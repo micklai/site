@@ -109,7 +109,7 @@ public class JPushUtils {
 
     public static void main(String[] args){
         JPushUtils utils = new JPushUtils();
-        utils.sendPush(JPushUtils.buildPushObject_android_tag_alertWithTitle(new String[]{"tag2"},"明天上午十点大合仓开会","我的行程",new HashMap<String,String>()));
+        utils.sendPush(JPushUtils.buildPushObject_android_tag_alertWithTitle(new String[]{"0843fb308ee44c058dfc9437574bf294"},"明天上午十点大合仓开会","我的行程",new HashMap<String,String>()));
         System.out.println("推送成功!");
     }
 }
