@@ -42,6 +42,7 @@ public class AreaController extends BaseController {
 	@ModelAttribute("area")
 	public Area get(@RequestParam(required=false) String id) {
 		if (StringUtils.isNotBlank(id)){
+
 			return areaService.get(id);
 		}else{
 			return new Area();
