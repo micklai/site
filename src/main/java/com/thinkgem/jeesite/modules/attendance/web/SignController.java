@@ -49,6 +49,7 @@ public class SignController extends BaseController {
 	@RequiresPermissions("attendence:sign:view")
 	@RequestMapping(value = "")
 	public String index(){
+
 		return "modules/attendance/signIndex";
 	}
 
