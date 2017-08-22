@@ -32,7 +32,7 @@ import com.thinkgem.jeesite.common.web.Servlets;
 public class CacheSessionDAO extends EnterpriseCacheSessionDAO implements SessionDAO {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	
+
     public CacheSessionDAO() {
         super();
     }
