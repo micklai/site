@@ -19,10 +19,11 @@ import com.thinkgem.jeesite.common.persistence.TreeEntity;
  */
 public class Office extends TreeEntity<Office> {
 
-	private static final long serialVersionUIDc = 1L;
-//	private Office parent;	// 父级编号
+	private static final long serialVersionUID = 1;
+	//	private Office parent;	// 父级编号
 //	private String parentIds; // 所有父级编号
 //	private Area area;		// 归属区域
+
 	private String code; 	// 机构编码
 //	private String name; 	// 机构名称
 //	private Integer sort;		// 排序
