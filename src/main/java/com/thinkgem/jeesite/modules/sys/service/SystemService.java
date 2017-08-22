@@ -52,6 +52,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	
 	@Autowired
 	private UserDao userDao;
+
 	@Autowired
 	private RoleDao roleDao;
 	@Autowired
