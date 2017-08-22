@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cwa.dao.SignDao">
+    
+	<sql id="signColumns">
+		a.id AS "id",
+		a.user_id AS "user.id",
+		a.user_name AS "userName",
+		a.sign_time AS "signTime",
+		a.sign_address AS "signAddress",
+		a.x_pos AS "xPos",
+		a.y_pos AS "yPos",
+		a.remark AS "remark",
+		a.customer_name AS "customerName",
+		a.sim_num AS "simNum",
+		a.sign_type AS "signType",
+		a.leader_resign_remark AS "leaderResignRemark",
+		a.resign_state AS "resignState",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		u2.name AS "user.name"
+	</sql>
+	
+	<sql id="signJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="Sign">
+		SELECT 
+			<include refid="signColumns"/>
+		FROM am_sign a
+		<include refid="signJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Sign">
+		SELECT 
+			<include refid="signColumns"/>
+		FROM am_sign a
+		<include refid="signJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="userName != null and userName != ''">
+				AND a.user_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{userName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{userName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{userName},'%')</if>
+			</if>
+			<if test="beginSignTime != null and endSignTime != null and beginSignTime != '' and endSignTime != ''">
+				AND a.sign_time BETWEEN #{beginSignTime} AND #{endSignTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Sign">
+		SELECT 
+			<include refid="signColumns"/>
+		FROM am_sign a
+		<include refid="signJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO am_sign(
+			id,
+			user_id,
+			user_name,
+			sign_time,
+			sign_address,
+			x_pos,
+			y_pos,
+			remark,
+			customer_name,
+			sim_num,
+			sign_type,
+			leader_resign_remark,
+			resign_state,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{user.id},
+			#{userName},
+			#{signTime},
+			#{signAddress},
+			#{xPos},
+			#{yPos},
+			#{remark},
+			#{customerName},
+			#{simNum},
+			#{signType},
+			#{leaderResignRemark},
+			#{resignState},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE am_sign SET 	
+			user_id = #{user.id},
+			user_name = #{userName},
+			sign_time = #{signTime},
+			sign_address = #{signAddress},
+			x_pos = #{xPos},
+			y_pos = #{yPos},
+			remark = #{remark},
+			customer_name = #{customerName},
+			sim_num = #{simNum},
+			sign_type = #{signType},
+			leader_resign_remark = #{leaderResignRemark},
+			resign_state = #{resignState},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE am_sign SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
