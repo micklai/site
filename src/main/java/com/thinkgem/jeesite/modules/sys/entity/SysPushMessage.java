@@ -23,7 +23,7 @@ public class SysPushMessage extends DataEntity<SysPushMessage> {
 	private String typeId;		// 消息类型id
 	private String typeName;		// 消息类型名称
 	private String msgContent;		// 消息内容
-	private Date msgData;		// 消息发送时间
+	private Date msgDate;		// 消息发送时间
 	private String dataId;		// 消息对应具体数据id
 	private Office office;		// 推送目标机构名
 	private User user;		// 推送目标用户
@@ -65,11 +65,11 @@ public class SysPushMessage extends DataEntity<SysPushMessage> {
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getMsgData() {
-		return msgData;
+		return msgDate;
 	}
 
 	public void setMsgData(Date msgData) {
-		this.msgData = msgData;
+		this.msgDate = msgData;
 	}
 	
 	@Length(min=1, max=32, message="消息对应具体数据id长度必须介于 1 和 32 之间")
