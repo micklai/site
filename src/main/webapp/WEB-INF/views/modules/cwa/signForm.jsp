@@ -27,7 +27,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/cwa/sign/">考勤管理列表</a></li>
+		<li><a href="${ctx}/cwa/sign/list">考勤管理列表</a></li>
 		<li class="active"><a href="${ctx}/cwa/sign/form?id=${sign.id}">考勤管理<shiro:hasPermission name="cwa:sign:edit">${not empty sign.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="cwa:sign:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="sign" action="${ctx}/cwa/sign/save" method="post" class="form-horizontal">
