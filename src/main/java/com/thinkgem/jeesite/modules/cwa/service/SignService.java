@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.cwa.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -43,5 +45,15 @@ public class SignService extends CrudService<SignDao, Sign> {
 	public void delete(Sign sign) {
 		super.delete(sign);
 	}
-	
+
+	public List<Sign> findTodaySignList(){
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String time = sdf.format(now)+" 00:00:00";
+		return dao.findTodaySignList(time);
+	}
+
+//	public List<Sign> findOfficeSign(Sign sign,String id){
+//		return dao.findOfficeSign(Sign sign,id);
+//	}
 }
