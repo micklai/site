@@ -42,16 +42,33 @@
 			<include refid="signColumns"/>
 		FROM am_sign a
 		<include refid="signJoins"/>
+			LEFT JOIN sys_office o on u2.office_id = o.id
+			LEFT JOIN sys_office c on u2.company_id = c.id
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="userName != null and userName != ''">
-				AND a.user_name LIKE 
+				AND a.user_name LIKE
 					<if test="dbName == 'oracle'">'%'||#{userName}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{userName}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{userName},'%')</if>
 			</if>
-			<if test="beginSignTime != null and endSignTime != null and beginSignTime != '' and endSignTime != ''">
-				AND a.sign_time BETWEEN #{beginSignTime} AND #{endSignTime}
+			<if test="beginSignTime != null and beginSignTime != ''">
+				AND a.sign_time >= #{beginSignTime}
+			</if>
+			<if test="endSignTime != null and endSignTime != ''">
+				AND a.sign_time => #{endSignTime}
+			</if>
+			<if test="user.company != null and user.company.id != null and user.company.id != ''">
+				AND (c.id = #{user.company.id} OR c.parent_ids LIKE
+				<if test="dbName == 'oracle'">'%,'||#{user.company.id}||',%')</if>
+				<if test="dbName == 'mssql'">'%,'+#{user.company.id}+',%')</if>
+				<if test="dbName == 'mysql'">CONCAT('%,', #{user.company.id}, ',%'))</if>
+			</if>
+			<if test="user.office != null and user.office.id != null and user.office.id != ''">
+				AND (o.id = #{user.office.id} OR o.parent_ids LIKE
+				<if test="dbName == 'oracle'">'%,'||#{user.office.id}||',%')</if>
+				<if test="dbName == 'mssql'">'%,'+#{user.office.id}+',%')</if>
+				<if test="dbName == 'mysql'">CONCAT('%,', #{user.office.id}, ',%'))</if>
 			</if>
 		</where>
 		<choose>
@@ -151,5 +168,13 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
+	<select id="findTodaySignList" resultType="Sign">
+		SELECT
+			<include refid="signColumns"/>
+		FROM am_sign a
+			<include refid="signJoins"/>
+		WHERE a.sign_time > #{time}
+	</select>
+
 </mapper>
