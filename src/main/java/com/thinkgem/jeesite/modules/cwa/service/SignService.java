@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.ehcache.constructs.nonstop.store.ExceptionOnTimeoutStore;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,29 @@ public class SignService extends CrudService<SignDao, Sign> {
 		return super.get(id);
 	}
 	
-	public List<Sign> findList(Sign sign) {
+	public List<Sign> findList(Sign sign){
+		Date beginTime = sign.getBeginSignTime();
+		Date endTime = sign.getEndSignTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat newSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		if(beginTime == null || "".equals(beginTime)){
+			beginTime = new Date();
+			String begin = sdf.format(beginTime)+" 00:00:00";
+			try {
+				sign.setBeginSignTime(newSdf.parse(begin));
+			}catch(Exception e){
+
+			}
+		}
+		if(endTime == null || "".equals(endTime)){
+			endTime = new Date();
+			String end = sdf.format(endTime)+" 23:59:59";
+			try {
+				sign.setEndSignTime(newSdf.parse(end));
+			}catch(Exception e){
+
+			}
+		}
 		return super.findList(sign);
 	}
 	

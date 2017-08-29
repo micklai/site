@@ -3,6 +3,9 @@
  */
 package com.thinkgem.jeesite.modules.cwa.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -31,6 +34,23 @@ public class OrbitService extends CrudService<OrbitDao, Orbit> {
 	}
 	
 	public Page<Orbit> findPage(Page<Orbit> page, Orbit orbit) {
+		Date begin = orbit.getBeginOrbitTime();
+		Date end = orbit.getEndOrbitTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		if(begin == null || "".equals(begin)){
+			Calendar c = Calendar.getInstance();
+			c.set(Calendar.MONTH,c.get(Calendar.MONTH)-1);
+			try {
+				Date monthAgo = c.getTime();
+				orbit.setBeginOrbitTime(monthAgo);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(end == null || "".equals(end)){
+			Date now = new Date();
+			orbit.setEndOrbitTime(now);
+		}
 		return super.findPage(page, orbit);
 	}
 	

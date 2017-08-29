@@ -19,13 +19,13 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/cwa/orbit/">轨道记录列表</a></li>
-		<shiro:hasPermission name="cwa:orbit:edit"><li><a href="${ctx}/cwa/orbit/form">轨道记录添加</a></li></shiro:hasPermission>
+		<li><a href="${ctx}/cwa/orbit/map">轨道地图视图</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="orbit" action="${ctx}/cwa/orbit/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>具体时间点：</label>
+			<li><label>查询时间：</label>
 				<input name="beginOrbitTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${orbit.beginOrbitTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/> - 
@@ -41,9 +41,8 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>具体时间点</th>
-				<th>当前位置</th>
-				<shiro:hasPermission name="cwa:orbit:edit"><th>操作</th></shiro:hasPermission>
+				<th>时间</th>
+				<th>位置</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -55,10 +54,6 @@
 				<td>
 					${orbit.address}
 				</td>
-				<shiro:hasPermission name="cwa:orbit:edit"><td>
-    				<a href="${ctx}/cwa/orbit/form?id=${orbit.id}">修改</a>
-					<a href="${ctx}/cwa/orbit/delete?id=${orbit.id}" onclick="return confirmx('确认要删除该轨道记录吗？', this.href)">删除</a>
-				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
 		</tbody>

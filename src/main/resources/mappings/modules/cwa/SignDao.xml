@@ -52,11 +52,8 @@
 					<if test="dbName == 'mssql'">'%'+#{userName}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{userName},'%')</if>
 			</if>
-			<if test="beginSignTime != null and beginSignTime != ''">
-				AND a.sign_time >= #{beginSignTime}
-			</if>
-			<if test="endSignTime != null and endSignTime != ''">
-				AND a.sign_time => #{endSignTime}
+			<if test="beginSignTime != null and endSignTime != null and beginSignTime != '' and endSignTime != ''">
+				AND a.sign_time BETWEEN #{beginSignTime} AND #{endSignTime}
 			</if>
 			<if test="user.company != null and user.company.id != null and user.company.id != ''">
 				AND (c.id = #{user.company.id} OR c.parent_ids LIKE

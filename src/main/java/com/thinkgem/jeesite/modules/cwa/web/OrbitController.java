@@ -49,16 +49,16 @@ public class OrbitController extends BaseController {
 	@RequiresPermissions("cwa:orbit:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Orbit orbit, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<Orbit> page = orbitService.findPage(new Page<Orbit>(request, response), orbit); 
+		Page<Orbit> page = orbitService.findPage(new Page<Orbit>(request, response), orbit);
 		model.addAttribute("page", page);
 		return "modules/cwa/orbitList";
 	}
 
 	@RequiresPermissions("cwa:orbit:view")
-	@RequestMapping(value = "form")
+	@RequestMapping(value = "map")
 	public String form(Orbit orbit, Model model) {
 		model.addAttribute("orbit", orbit);
-		return "modules/cwa/orbitForm";
+		return "modules/cwa/orbitMap";
 	}
 
 	@RequiresPermissions("cwa:orbit:edit")
