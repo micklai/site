@@ -47,7 +47,7 @@ public class SmScheduleController extends BaseController {
 	}
 	
 	@RequiresPermissions("sch:smSchedule:view")
-	@RequestMapping(value = {"list", ""})
+	@RequestMapping(value = {"list", "index"})
 	public String list(SmSchedule smSchedule, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SmSchedule> page = smScheduleService.findPage(new Page<SmSchedule>(request, response), smSchedule); 
 		model.addAttribute("page", page);
