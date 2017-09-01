@@ -174,4 +174,15 @@
 		WHERE a.sign_time > #{time}
 	</select>
 
+	<select id="findPersonSignByMonth" resultType="Sign">
+		SELECT
+		<include refid="signColumns"/>
+		FROM am_sign a
+		<include refid="signJoins"/>
+		WHERE a.user_id = #{user.id}
+		<if test="beginSignTime != null and endSignTime != null and beginSignTime != '' and endSignTime != ''">
+			AND a.sign_time BETWEEN #{beginSignTime} AND #{endSignTime}
+		</if>
+	</select>
+
 </mapper>

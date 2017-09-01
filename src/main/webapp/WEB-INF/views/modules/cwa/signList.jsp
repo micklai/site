@@ -18,8 +18,9 @@
 	<style type="text/css">
 		html,body{height:100%}
 		.accordion-group{width:48%;height:100%}
-		#mainContent{height:80%}
-		#baiduMap{position:absolute;right:10px;bottom: 10px;width:30%;height:40%}
+		#mainContent{position:relative;height:86%}
+		#baiduMap{float: left;width:30%;height: 100%;margin-left:10px}
+		.signTable{float: left;width:68%;overflow: auto}
 	</style>
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7012b35c62e5fd0b8c97e160cb5a4448"></script>
 	<script type="text/javascript">
@@ -46,13 +47,8 @@
                 div.style.border = "1px solid gray";
                 div.style.backgroundColor = "white";
                 div.onclick = function (e) {
-                    $("#baiduMap").removeAttr("style")
-                    $("#baiduMap").css({
-                        width: "100%",
-                        height: "100%",
-                        float: "left",
-                        overflow: "hidden"
-                    });
+                    $("#baiduMap").css({width: "100%", float: "left",margin:"0"});
+                    $(".signTable").css({display:"none"});
                     map.removeControl(bigMapCtrl);
                     addSmallMap(map,bigMapCtrl);
                 };
@@ -79,8 +75,8 @@
                 div.style.border = "1px solid gray";
                 div.style.backgroundColor = "white";
                 div.onclick = function(e){
-                    $("#baiduMap").removeAttr("style")
-                    $("#baiduMap").css({position:"absolute",right:"10px",bottom: "10px",width:"30%",height:"40%",overflow:"hidden"});
+                    $("#baiduMap").css({float:"left",width:"30%"});
+                    $(".signTable").css({display:"block"})
                     map.removeControl(bigMapCtrl);
                     addBigMapCtrl(map,smallMapCtrl);
                 };
@@ -139,7 +135,7 @@
 				<tbody>
 				<c:forEach items="${page.list}" var="sign">
 					<tr>
-						<td><a href="${ctx}/cwa/orbit/list?id=${sign.id}" target="_blank">
+						<td><shiro:hasPermission name="cwa:orbit:view"><a href="${ctx}/cwa/orbit/list?id=${sign.id}" target="_blank"></shiro:hasPermission>
 							${sign.userName}
 						</a></td>
 						<td>

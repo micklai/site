@@ -1,0 +1,18 @@
+/**
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ */
+package com.thinkgem.jeesite.modules.sch.dao;
+
+import com.thinkgem.jeesite.common.persistence.CrudDao;
+import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
+import com.thinkgem.jeesite.modules.sch.entity.SmSchedule;
+
+/**
+ * 日程管理类DAO接口
+ * @author lhc
+ * @version 2017-08-28
+ */
+@MyBatisDao
+public interface SmScheduleDao extends CrudDao<SmSchedule> {
+	
+}
