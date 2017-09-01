@@ -18,7 +18,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
  * @author lhc
  * @version 2017-09-01
  */
-public class SmSchedule extends DataEntity<SmSchedule> {
+public class Schedule extends DataEntity<Schedule> {
 	
 	private static final long serialVersionUID = 1L;
 	private User user;		// 用户Id
@@ -33,13 +33,13 @@ public class SmSchedule extends DataEntity<SmSchedule> {
 	private String visitName;		// 拜访对象
 	private String resultState;		// 日程完成状态，0：未完成；1:完成
 	private String autoFlag;		// 是否自动考勤签到，0：否；1：是
-	private List<SmScheduleAttachment> smScheduleAttachmentList = Lists.newArrayList();		// 子表列表
+	private List<ScheduleAttachment> scheduleAttachmentList = Lists.newArrayList();		// 子表列表
 	
-	public SmSchedule() {
+	public Schedule() {
 		super();
 	}
 
-	public SmSchedule(String id){
+	public Schedule(String id){
 		super(id);
 	}
 
@@ -152,11 +152,11 @@ public class SmSchedule extends DataEntity<SmSchedule> {
 		this.autoFlag = autoFlag;
 	}
 	
-	public List<SmScheduleAttachment> getSmScheduleAttachmentList() {
-		return smScheduleAttachmentList;
+	public List<ScheduleAttachment> getScheduleAttachmentList() {
+		return scheduleAttachmentList;
 	}
 
-	public void setSmScheduleAttachmentList(List<SmScheduleAttachment> smScheduleAttachmentList) {
-		this.smScheduleAttachmentList = smScheduleAttachmentList;
+	public void setScheduleAttachmentList(List<ScheduleAttachment> scheduleAttachmentList) {
+		this.scheduleAttachmentList = scheduleAttachmentList;
 	}
 }

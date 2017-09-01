@@ -18,10 +18,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/sm/smSchedule/">日程管理列表</a></li>
-		<shiro:hasPermission name="sm:smSchedule:edit"><li><a href="${ctx}/sm/smSchedule/form">日程管理添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/sm/schedule/">日程管理列表</a></li>
+		<shiro:hasPermission name="sm:schedule:edit"><li><a href="${ctx}/sm/schedule/form">日程管理添加</a></li></shiro:hasPermission>
 	</ul>
-	<form:form id="searchForm" modelAttribute="smSchedule" action="${ctx}/sm/smSchedule/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="schedule" action="${ctx}/sm/schedule/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
@@ -48,42 +48,42 @@
 				<th>日程完成状态，0：未完成；1:完成</th>
 				<th>是否自动考勤签到，0：否；1：是</th>
 				<th>备注信息</th>
-				<shiro:hasPermission name="sm:smSchedule:edit"><th>操作</th></shiro:hasPermission>
+				<shiro:hasPermission name="sm:schedule:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="smSchedule">
+		<c:forEach items="${page.list}" var="schedule">
 			<tr>
-				<td><a href="${ctx}/sm/smSchedule/form?id=${smSchedule.id}">
-					${smSchedule.typeName}
+				<td><a href="${ctx}/sm/schedule/form?id=${schedule.id}">
+					${schedule.typeName}
 				</a></td>
 				<td>
-					${smSchedule.title}
+					${schedule.title}
 				</td>
 				<td>
-					<fmt:formatDate value="${smSchedule.time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${schedule.time}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${smSchedule.address}
+					${schedule.address}
 				</td>
 				<td>
-					${smSchedule.remark}
+					${schedule.remark}
 				</td>
 				<td>
-					${smSchedule.visitName}
+					${schedule.visitName}
 				</td>
 				<td>
-					${smSchedule.resultState}
+					${schedule.resultState}
 				</td>
 				<td>
-					${smSchedule.autoFlag}
+					${schedule.autoFlag}
 				</td>
 				<td>
-					${smSchedule.remarks}
+					${schedule.remarks}
 				</td>
-				<shiro:hasPermission name="sm:smSchedule:edit"><td>
-    				<a href="${ctx}/sm/smSchedule/form?id=${smSchedule.id}">修改</a>
-					<a href="${ctx}/sm/smSchedule/delete?id=${smSchedule.id}" onclick="return confirmx('确认要删除该日程管理吗？', this.href)">删除</a>
+				<shiro:hasPermission name="sm:schedule:edit"><td>
+    				<a href="${ctx}/sm/schedule/form?id=${schedule.id}">修改</a>
+					<a href="${ctx}/sm/schedule/delete?id=${schedule.id}" onclick="return confirmx('确认要删除该日程管理吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

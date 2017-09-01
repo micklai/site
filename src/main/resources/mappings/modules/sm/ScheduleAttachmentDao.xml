@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.thinkgem.jeesite.modules.sm.dao.SmScheduleAttachmentDao">
+<mapper namespace="com.thinkgem.jeesite.modules.sm.dao.ScheduleAttachmentDao">
     
-	<sql id="smScheduleAttachmentColumns">
+	<sql id="scheduleAttachmentColumns">
 		a.id AS "id",
 		a.schedule_id AS "scheduleId",
 		a.user_id AS "user.id",
@@ -19,24 +19,24 @@
 		u3.name AS "user.name"
 	</sql>
 	
-	<sql id="smScheduleAttachmentJoins">
+	<sql id="scheduleAttachmentJoins">
 		LEFT JOIN sm_schedule b ON b.id = a.schedule_id
 		LEFT JOIN sys_user u3 ON u3.id = a.user_id
 	</sql>
     
-	<select id="get" resultType="SmScheduleAttachment">
+	<select id="get" resultType="ScheduleAttachment">
 		SELECT 
-			<include refid="smScheduleAttachmentColumns"/>
+			<include refid="scheduleAttachmentColumns"/>
 		FROM sm_schedule_attachment a
-		<include refid="smScheduleAttachmentJoins"/>
+		<include refid="scheduleAttachmentJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="SmScheduleAttachment">
+	<select id="findList" resultType="ScheduleAttachment">
 		SELECT 
-			<include refid="smScheduleAttachmentColumns"/>
+			<include refid="scheduleAttachmentColumns"/>
 		FROM sm_schedule_attachment a
-		<include refid="smScheduleAttachmentJoins"/>
+		<include refid="scheduleAttachmentJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="scheduleId != null and scheduleId != ''">
@@ -62,11 +62,11 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="SmScheduleAttachment">
+	<select id="findAllList" resultType="ScheduleAttachment">
 		SELECT 
-			<include refid="smScheduleAttachmentColumns"/>
+			<include refid="scheduleAttachmentColumns"/>
 		FROM sm_schedule_attachment a
-		<include refid="smScheduleAttachmentJoins"/>
+		<include refid="scheduleAttachmentJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>		

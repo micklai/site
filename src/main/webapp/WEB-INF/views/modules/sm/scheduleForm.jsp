@@ -58,16 +58,16 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/sm/smSchedule/">日程管理列表</a></li>
-		<li class="active"><a href="${ctx}/sm/smSchedule/form?id=${smSchedule.id}">日程管理<shiro:hasPermission name="sm:smSchedule:edit">${not empty smSchedule.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sm:smSchedule:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/sm/schedule/">日程管理列表</a></li>
+		<li class="active"><a href="${ctx}/sm/schedule/form?id=${schedule.id}">日程管理<shiro:hasPermission name="sm:schedule:edit">${not empty schedule.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sm:schedule:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="smSchedule" action="${ctx}/sm/smSchedule/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="schedule" action="${ctx}/sm/schedule/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">用户Id：</label>
 			<div class="controls">
-				<sys:treeselect id="user" name="user.id" value="${smSchedule.user.id}" labelName="user.name" labelValue="${smSchedule.user.name}"
+				<sys:treeselect id="user" name="user.id" value="${schedule.user.id}" labelName="user.name" labelValue="${schedule.user.name}"
 					title="用户" url="/sys/office/treeData?type=3" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
@@ -97,7 +97,7 @@
 			<label class="control-label">日程时间：</label>
 			<div class="controls">
 				<input name="time" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${smSchedule.time}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					value="<fmt:formatDate value="${schedule.time}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
@@ -163,60 +163,60 @@
 								<th>附件类型</th>
 								<th>福建创建时间</th>
 								<th>备注信息</th>
-								<shiro:hasPermission name="sm:smSchedule:edit"><th width="10">&nbsp;</th></shiro:hasPermission>
+								<shiro:hasPermission name="sm:schedule:edit"><th width="10">&nbsp;</th></shiro:hasPermission>
 							</tr>
 						</thead>
-						<tbody id="smScheduleAttachmentList">
+						<tbody id="scheduleAttachmentList">
 						</tbody>
-						<shiro:hasPermission name="sm:smSchedule:edit"><tfoot>
-							<tr><td colspan="8"><a href="javascript:" onclick="addRow('#smScheduleAttachmentList', smScheduleAttachmentRowIdx, smScheduleAttachmentTpl);smScheduleAttachmentRowIdx = smScheduleAttachmentRowIdx + 1;" class="btn">新增</a></td></tr>
+						<shiro:hasPermission name="sm:schedule:edit"><tfoot>
+							<tr><td colspan="8"><a href="javascript:" onclick="addRow('#scheduleAttachmentList', scheduleAttachmentRowIdx, scheduleAttachmentTpl);scheduleAttachmentRowIdx = scheduleAttachmentRowIdx + 1;" class="btn">新增</a></td></tr>
 						</tfoot></shiro:hasPermission>
 					</table>
-					<script type="text/template" id="smScheduleAttachmentTpl">//<!--
-						<tr id="smScheduleAttachmentList{{idx}}">
+					<script type="text/template" id="scheduleAttachmentTpl">//<!--
+						<tr id="scheduleAttachmentList{{idx}}">
 							<td class="hide">
-								<input id="smScheduleAttachmentList{{idx}}_id" name="smScheduleAttachmentList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
-								<input id="smScheduleAttachmentList{{idx}}_delFlag" name="smScheduleAttachmentList[{{idx}}].delFlag" type="hidden" value="0"/>
+								<input id="scheduleAttachmentList{{idx}}_id" name="scheduleAttachmentList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
+								<input id="scheduleAttachmentList{{idx}}_delFlag" name="scheduleAttachmentList[{{idx}}].delFlag" type="hidden" value="0"/>
 							</td>
 							<td>
-								<sys:treeselect id="smScheduleAttachmentList{{idx}}_user" name="smScheduleAttachmentList[{{idx}}].user.id" value="{{row.user.id}}" labelName="smScheduleAttachmentList{{idx}}.user.name" labelValue="{{row.user.name}}"
+								<sys:treeselect id="scheduleAttachmentList{{idx}}_user" name="scheduleAttachmentList[{{idx}}].user.id" value="{{row.user.id}}" labelName="scheduleAttachmentList{{idx}}.user.name" labelValue="{{row.user.name}}"
 									title="用户" url="/sys/office/treeData?type=3" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
 							</td>
 							<td>
-								<input id="smScheduleAttachmentList{{idx}}_attachmentName" name="smScheduleAttachmentList[{{idx}}].attachmentName" type="text" value="{{row.attachmentName}}" maxlength="64" class="input-small required"/>
+								<input id="scheduleAttachmentList{{idx}}_attachmentName" name="scheduleAttachmentList[{{idx}}].attachmentName" type="text" value="{{row.attachmentName}}" maxlength="64" class="input-small required"/>
 							</td>
 							<td>
-								<input id="smScheduleAttachmentList{{idx}}_attachmentPath" name="smScheduleAttachmentList[{{idx}}].attachmentPath" type="text" value="{{row.attachmentPath}}" maxlength="128" class="input-small required"/>
+								<input id="scheduleAttachmentList{{idx}}_attachmentPath" name="scheduleAttachmentList[{{idx}}].attachmentPath" type="text" value="{{row.attachmentPath}}" maxlength="128" class="input-small required"/>
 							</td>
 							<td>
-								<input id="smScheduleAttachmentList{{idx}}_attachmentType" name="smScheduleAttachmentList[{{idx}}].attachmentType" type="text" value="{{row.attachmentType}}" maxlength="16" class="input-small required"/>
+								<input id="scheduleAttachmentList{{idx}}_attachmentType" name="scheduleAttachmentList[{{idx}}].attachmentType" type="text" value="{{row.attachmentType}}" maxlength="16" class="input-small required"/>
 							</td>
 							<td>
-								<input id="smScheduleAttachmentList{{idx}}_createTime" name="smScheduleAttachmentList[{{idx}}].createTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
+								<input id="scheduleAttachmentList{{idx}}_createTime" name="scheduleAttachmentList[{{idx}}].createTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 									value="{{row.createTime}}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 							</td>
 							<td>
-								<textarea id="smScheduleAttachmentList{{idx}}_remarks" name="smScheduleAttachmentList[{{idx}}].remarks" rows="4" maxlength="255" class="input-small ">{{row.remarks}}</textarea>
+								<textarea id="scheduleAttachmentList{{idx}}_remarks" name="scheduleAttachmentList[{{idx}}].remarks" rows="4" maxlength="255" class="input-small ">{{row.remarks}}</textarea>
 							</td>
-							<shiro:hasPermission name="sm:smSchedule:edit"><td class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRow(this, '#smScheduleAttachmentList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
+							<shiro:hasPermission name="sm:schedule:edit"><td class="text-center" width="10">
+								{{#delBtn}}<span class="close" onclick="delRow(this, '#scheduleAttachmentList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
 							</td></shiro:hasPermission>
 						</tr>//-->
 					</script>
 					<script type="text/javascript">
-						var smScheduleAttachmentRowIdx = 0, smScheduleAttachmentTpl = $("#smScheduleAttachmentTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
+						var scheduleAttachmentRowIdx = 0, scheduleAttachmentTpl = $("#scheduleAttachmentTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
 						$(document).ready(function() {
-							var data = ${fns:toJson(smSchedule.smScheduleAttachmentList)};
+							var data = ${fns:toJson(schedule.scheduleAttachmentList)};
 							for (var i=0; i<data.length; i++){
-								addRow('#smScheduleAttachmentList', smScheduleAttachmentRowIdx, smScheduleAttachmentTpl, data[i]);
-								smScheduleAttachmentRowIdx = smScheduleAttachmentRowIdx + 1;
+								addRow('#scheduleAttachmentList', scheduleAttachmentRowIdx, scheduleAttachmentTpl, data[i]);
+								scheduleAttachmentRowIdx = scheduleAttachmentRowIdx + 1;
 							}
 						});
 					</script>
 				</div>
 			</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="sm:smSchedule:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="sm:schedule:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

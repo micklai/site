@@ -5,7 +5,7 @@ package com.thinkgem.jeesite.modules.sm.dao;
 
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
-import com.thinkgem.jeesite.modules.sm.entity.SmSchedule;
+import com.thinkgem.jeesite.modules.sm.entity.Schedule;
 
 /**
  * 日程管理类DAO接口
@@ -13,6 +13,6 @@ import com.thinkgem.jeesite.modules.sm.entity.SmSchedule;
  * @version 2017-09-01
  */
 @MyBatisDao
-public interface SmScheduleDao extends CrudDao<SmSchedule> {
+public interface ScheduleDao extends CrudDao<Schedule> {
 	
 }

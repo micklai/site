@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.thinkgem.jeesite.modules.sm.dao.SmScheduleDao">
+<mapper namespace="com.thinkgem.jeesite.modules.sm.dao.ScheduleDao">
     
-	<sql id="smScheduleColumns">
+	<sql id="scheduleColumns">
 		a.id AS "id",
 		a.user_id AS "user.id",
 		a.type_id AS "typeId",
@@ -25,23 +25,23 @@
 		u2.name AS "user.name"
 	</sql>
 	
-	<sql id="smScheduleJoins">
+	<sql id="scheduleJoins">
 		LEFT JOIN sys_user u2 ON u2.id = a.user_id
 	</sql>
     
-	<select id="get" resultType="SmSchedule">
+	<select id="get" resultType="Schedule">
 		SELECT 
-			<include refid="smScheduleColumns"/>
+			<include refid="scheduleColumns"/>
 		FROM sm_schedule a
-		<include refid="smScheduleJoins"/>
+		<include refid="scheduleJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="SmSchedule">
+	<select id="findList" resultType="Schedule">
 		SELECT 
-			<include refid="smScheduleColumns"/>
+			<include refid="scheduleColumns"/>
 		FROM sm_schedule a
-		<include refid="smScheduleJoins"/>
+		<include refid="scheduleJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="typeName != null and typeName != ''">
@@ -64,11 +64,11 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="SmSchedule">
+	<select id="findAllList" resultType="Schedule">
 		SELECT 
-			<include refid="smScheduleColumns"/>
+			<include refid="scheduleColumns"/>
 		FROM sm_schedule a
-		<include refid="smScheduleJoins"/>
+		<include refid="scheduleJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>		
