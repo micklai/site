@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sm.dao.SmScheduleDao">
+    
+	<sql id="smScheduleColumns">
+		a.id AS "id",
+		a.user_id AS "user.id",
+		a.type_id AS "typeId",
+		a.type_name AS "typeName",
+		a.title AS "title",
+		a.time AS "time",
+		a.address AS "address",
+		a.x_pos AS "xPos",
+		a.y_pos AS "yPos",
+		a.remark AS "remark",
+		a.visit_name AS "visitName",
+		a.result_state AS "resultState",
+		a.auto_flag AS "autoFlag",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		u2.name AS "user.name"
+	</sql>
+	
+	<sql id="smScheduleJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="SmSchedule">
+		SELECT 
+			<include refid="smScheduleColumns"/>
+		FROM sm_schedule a
+		<include refid="smScheduleJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SmSchedule">
+		SELECT 
+			<include refid="smScheduleColumns"/>
+		FROM sm_schedule a
+		<include refid="smScheduleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="typeName != null and typeName != ''">
+				AND a.type_name = #{typeName}
+			</if>
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SmSchedule">
+		SELECT 
+			<include refid="smScheduleColumns"/>
+		FROM sm_schedule a
+		<include refid="smScheduleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sm_schedule(
+			id,
+			user_id,
+			type_id,
+			type_name,
+			title,
+			time,
+			address,
+			x_pos,
+			y_pos,
+			remark,
+			visit_name,
+			result_state,
+			auto_flag,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{user.id},
+			#{typeId},
+			#{typeName},
+			#{title},
+			#{time},
+			#{address},
+			#{xPos},
+			#{yPos},
+			#{remark},
+			#{visitName},
+			#{resultState},
+			#{autoFlag},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sm_schedule SET 	
+			user_id = #{user.id},
+			type_id = #{typeId},
+			type_name = #{typeName},
+			title = #{title},
+			time = #{time},
+			address = #{address},
+			x_pos = #{xPos},
+			y_pos = #{yPos},
+			remark = #{remark},
+			visit_name = #{visitName},
+			result_state = #{resultState},
+			auto_flag = #{autoFlag},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sm_schedule SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
