@@ -21,4 +21,5 @@ public interface SignDao extends CrudDao<Sign> {
 
 //	public List<Sign> findOfficeSign(sign,id);
 
+	public List<Sign> findPersonSignByMonth(Sign sign);
 }

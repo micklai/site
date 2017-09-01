@@ -141,4 +141,16 @@ public class SignController extends BaseController {
 		return null;
 	}
 
+	@RequiresPermissions("cwa:sign:view")
+	@RequestMapping(value = "personSign")
+	public String personSignIndex(Sign sign){
+		return "modules/cwa/psersonSignIndex";
+	}
+
+	@ResponseBody
+	@RequiresPermissions("cwa:sign:view")
+	@RequestMapping(value="findPersonSignByMonth")
+	public List<Map<String,Object>> findPersonSignByMonth(Sign sign,HttpServletRequest request,HttpServletResponse response){
+		return signService.findPersonSignByMonth(sign);
+	}
 }

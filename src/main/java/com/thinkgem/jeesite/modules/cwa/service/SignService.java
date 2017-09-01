@@ -4,9 +4,10 @@
 package com.thinkgem.jeesite.modules.cwa.service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import net.sf.ehcache.constructs.nonstop.store.ExceptionOnTimeoutStore;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,6 +75,22 @@ public class SignService extends CrudService<SignDao, Sign> {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String time = sdf.format(now)+" 00:00:00";
 		return dao.findTodaySignList(time);
+	}
+
+	public List<Map<String,Object>> findPersonSignByMonth(Sign sign) {
+		List<Map<String,Object>> list =  new ArrayList<Map<String, Object>>();
+		sign.setId(UserUtils.getUser().getId());
+		List<Sign> signs = dao.findPersonSignByMonth(sign);
+		for(Sign caseInfo : signs){
+			Date signTime = caseInfo.getSignTime();
+			Calendar c = Calendar.getInstance();
+			c.setTime(signTime);
+			Map<String,Object> map = new HashMap<String, Object>();
+			map.put("day",c.get(Calendar.DAY_OF_MONTH));
+ 			map.put("sign",caseInfo);
+			list.add(map);
+		}
+		return list;
 	}
 
 //	public List<Sign> findOfficeSign(Sign sign,String id){
