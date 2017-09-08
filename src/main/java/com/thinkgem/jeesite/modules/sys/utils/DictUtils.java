@@ -26,6 +26,7 @@ public class DictUtils {
 	private static DictDao dictDao = SpringContextHolder.getBean(DictDao.class);
 
 	public static final String CACHE_DICT_MAP = "dictMap";
+	public static final String schedule_DICT_TYPE = "schedule_type";
 	
 	public static String getDictLabel(String value, String type, String defaultValue){
 		if (StringUtils.isNotBlank(type) && StringUtils.isNotBlank(value)){

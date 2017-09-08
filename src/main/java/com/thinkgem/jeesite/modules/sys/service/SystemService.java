@@ -127,6 +127,21 @@ public class SystemService extends BaseService implements InitializingBean {
 		}
 		return list;
 	}
+
+	/**
+	 * 获取当前部门用户所管辖用户
+	 * @param user
+	 * @return
+	 */
+	public List<User> findAllAffiliationByOfficeId(User user){
+		List<User> list = (List<User>)CacheUtils.get(UserUtils.USER_CACHE,UserUtils.USER_CACHE_ALL_AFFILIATION_BY_OFFICE_ID_+user.getOffice().getId());
+		if(list == null){
+			user.getSqlMap().put("dsf", dataScopeFilter(user.getCurrentUser(), "o", "a"));
+			list = userDao.findAllAffiliationByOfficeId(user);
+			CacheUtils.put(UserUtils.USER_CACHE,UserUtils.USER_CACHE_ALL_AFFILIATION_BY_OFFICE_ID_+user.getOffice().getId(),list);
+		}
+		return list;
+	}
 	
 	@Transactional(readOnly = false)
 	public void saveUser(User user) {

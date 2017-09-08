@@ -71,10 +71,7 @@ public class SignController extends BaseController {
 	@RequiresPermissions("cwa:sign:view")
 	@RequestMapping(value = {"list"})
 	public String list(Sign sign, HttpServletRequest request, HttpServletResponse response, Model model) {
-		if(sign.getUser() == null){
-			sign.setUser(new User());
-		}
-		sign.getSqlMap().put("dsf",signService.dataScopeFilter(sign.getUser().getCurrentUser(),"o","a"));
+		sign.getSqlMap().put("dsf",signService.dataScopeFilter(UserUtils.getUser(),"o","u2"));
 		Page<Sign> page = new Page<Sign>(request,response);
 		sign.setPage(page);
 		List<Sign> signs = signService.findList(sign);
@@ -137,7 +134,6 @@ public class SignController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "treeData")
 	public List<Map<String, Object>> treeData(@RequestParam(required=false) String officeId, HttpServletResponse response) {
-
 		return null;
 	}
 

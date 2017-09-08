@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thinkgem.jeesite.modules.sm.dao.ScheduleDao">
+
+	<resultMap id="scheduleAndScheduleAttachment" type="Schedule">
+		<id property="id" column="id" />
+		<result property="user.id" column="user.id" />
+		<result property="typeId" column="typeId" />
+		<result property="typeName" column="typeName" />
+		<result property="title" column="title" />
+		<result property="time" column="time" />
+		<result property="address" column="address" />
+		<result property="xPos" column="xPos" />
+		<result property="yPos" column="yPos" />
+		<result property="remark" column="remark" />
+		<result property="visitName" column="visitName" />
+		<result property="resultState" column="resultState" />
+		<result property="autoFlag" column="autoFlag" />
+
+		<collection property="scheduleAttachmentList" ofType="ScheduleAttachment">
+			<id property="id" column="scheduleAttachmentList.id" />
+			<id property="scheduleId.id" column="scheduleAttachmentList.schedule.id" />
+			<id property="attachmentName" column="scheduleAttachmentList.attachmentName" />
+			<id property="attachmentPath" column="scheduleAttachmentList.attachmentPath" />
+			<id property="attachmentType" column="scheduleAttachmentList.attachmentType" />
+			<id property="remarks" column="scheduleAttachmentList.remarks" />
+		</collection>
+		<collection property="officeList" ofType="Office">
+			<id property="id" column="officeList.id" />
+		</collection>
+	</resultMap>
     
 	<sql id="scheduleColumns">
 		a.id AS "id",
@@ -27,6 +55,7 @@
 	
 	<sql id="scheduleJoins">
 		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+		LEFT JOIN sm_schedule_attachment b ON b.schedule_id = a.id
 	</sql>
     
 	<select id="get" resultType="Schedule">
@@ -37,11 +66,13 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="Schedule">
+	<select id="findList" resultMap="scheduleAndScheduleAttachment">
 		SELECT 
 			<include refid="scheduleColumns"/>
 		FROM sm_schedule a
 		<include refid="scheduleJoins"/>
+		LEFT JOIN sys_office o on u2.office_id = o.id
+		LEFT JOIN sys_office c on u2.company_id = c.id
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="typeName != null and typeName != ''">
@@ -53,9 +84,16 @@
 					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
 			</if>
+			<if test="user != null and user.id != null and user.id != ''">
+				AND a.user_id = #{user.id}
+			</if>
+			<if test="beginScheduleTime != null and beginScheduleTime != '' and endScheduleTime != null and endScheduleTime != ''">
+				AND a.time BETWEEN #{beginScheduleTime} AND #{endScheduleTime}
+			</if>
+			${sqlMap.dsf}
 		</where>
 		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+			<when test="page != null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
@@ -71,15 +109,19 @@
 		<include refid="scheduleJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="#{user.id} != null and #{user.id} != ''">
+				AND a.user = #{user.id}
+			</if>
 		</where>		
 		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
+			<!--<when test="page !=null and page.orderBy != null and page.orderBy != ''">-->
+				<!--ORDER BY ${page.orderBy}-->
+			<!--</when>-->
+			<!--<otherwise>-->
+				<!--ORDER BY a.update_date DESC-->
+			<!--</otherwise>-->
 		</choose>
+		orderBy a.TIME
 	</select>
 	
 	<insert id="insert">

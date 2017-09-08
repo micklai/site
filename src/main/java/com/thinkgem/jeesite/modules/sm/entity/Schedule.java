@@ -33,6 +33,8 @@ public class Schedule extends DataEntity<Schedule> {
 	private String visitName;		// 拜访对象
 	private String resultState;		// 日程完成状态，0：未完成；1:完成
 	private String autoFlag;		// 是否自动考勤签到，0：否；1：是
+	private Date beginScheduleTime;		// 开始 签到时间
+	private Date endScheduleTime;		// 结束 签到时间
 	private List<ScheduleAttachment> scheduleAttachmentList = Lists.newArrayList();		// 子表列表
 	
 	public Schedule() {
@@ -158,5 +160,21 @@ public class Schedule extends DataEntity<Schedule> {
 
 	public void setScheduleAttachmentList(List<ScheduleAttachment> scheduleAttachmentList) {
 		this.scheduleAttachmentList = scheduleAttachmentList;
+	}
+
+	public Date getBeginScheduleTime() {
+		return beginScheduleTime;
+	}
+
+	public void setBeginScheduleTime(Date beginScheduleTime) {
+		this.beginScheduleTime = beginScheduleTime;
+	}
+
+	public Date getEndScheduleTime() {
+		return endScheduleTime;
+	}
+
+	public void setEndScheduleTime(Date endScheduleTime) {
+		this.endScheduleTime = endScheduleTime;
 	}
 }

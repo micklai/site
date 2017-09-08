@@ -324,5 +324,14 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
+
+	<select id="findAllAffiliationByOfficeId" resultType="User">
+		SELECT
+		<include refid="userColumns"/>
+		FROM sys_user a
+		<include refid="userJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		${sqlMap.dsf}
+	</select>
 	
 </mapper>

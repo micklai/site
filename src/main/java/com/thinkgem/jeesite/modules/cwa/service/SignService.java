@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.cwa.service;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import net.sf.ehcache.constructs.nonstop.store.ExceptionOnTimeoutStore;
@@ -45,13 +46,7 @@ public class SignService extends CrudService<SignDao, Sign> {
 			}
 		}
 		if(endTime == null || "".equals(endTime)){
-			endTime = new Date();
-			String end = sdf.format(endTime)+" 23:59:59";
-			try {
-				sign.setEndSignTime(newSdf.parse(end));
-			}catch(Exception e){
-
-			}
+				sign.setEndSignTime(new Date());
 		}
 		return super.findList(sign);
 	}
@@ -79,7 +74,16 @@ public class SignService extends CrudService<SignDao, Sign> {
 
 	public List<Map<String,Object>> findPersonSignByMonth(Sign sign) {
 		List<Map<String,Object>> list =  new ArrayList<Map<String, Object>>();
-		sign.setId(UserUtils.getUser().getId());
+		sign.setUser(UserUtils.getUser());
+		if(sign.getBeginSignTime() == null){
+			sign.setBeginSignTime(new Date());
+		}
+		if(sign.getEndSignTime() == null){
+			String beginMonth = DateUtils.getYear()+"-"+DateUtils.getMonth()+"-01"+" 00:00:00";
+			try {
+				sign.setEndSignTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beginMonth));
+			}catch(Exception e){}
+		}
 		List<Sign> signs = dao.findPersonSignByMonth(sign);
 		for(Sign caseInfo : signs){
 			Date signTime = caseInfo.getSignTime();
@@ -87,7 +91,7 @@ public class SignService extends CrudService<SignDao, Sign> {
 			c.setTime(signTime);
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("day",c.get(Calendar.DAY_OF_MONTH));
- 			map.put("sign",caseInfo);
+			map.put("sign",caseInfo);
 			list.add(map);
 		}
 		return list;

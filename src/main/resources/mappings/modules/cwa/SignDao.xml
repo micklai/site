@@ -55,18 +55,19 @@
 			<if test="beginSignTime != null and endSignTime != null and beginSignTime != '' and endSignTime != ''">
 				AND a.sign_time BETWEEN #{beginSignTime} AND #{endSignTime}
 			</if>
-			<if test="user.company != null and user.company.id != null and user.company.id != ''">
+			<if test="user != null and user.company != null and user.company.id != null and user.company.id != ''">
 				AND (c.id = #{user.company.id} OR c.parent_ids LIKE
 				<if test="dbName == 'oracle'">'%,'||#{user.company.id}||',%')</if>
 				<if test="dbName == 'mssql'">'%,'+#{user.company.id}+',%')</if>
 				<if test="dbName == 'mysql'">CONCAT('%,', #{user.company.id}, ',%'))</if>
 			</if>
-			<if test="user.office != null and user.office.id != null and user.office.id != ''">
+			<if test="user != null and user.office != null and user.office.id != null and user.office.id != ''">
 				AND (o.id = #{user.office.id} OR o.parent_ids LIKE
 				<if test="dbName == 'oracle'">'%,'||#{user.office.id}||',%')</if>
 				<if test="dbName == 'mssql'">'%,'+#{user.office.id}+',%')</if>
 				<if test="dbName == 'mysql'">CONCAT('%,', #{user.office.id}, ',%'))</if>
 			</if>
+			${sqlMap.dsf}
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -179,7 +180,7 @@
 		<include refid="signColumns"/>
 		FROM am_sign a
 		<include refid="signJoins"/>
-		WHERE a.user_id = #{user.id}
+		WHERE a.user_id = #{user.id} AND a.del_flag = #{DEL_FLAG_NORMAL}
 		<if test="beginSignTime != null and endSignTime != null and beginSignTime != '' and endSignTime != ''">
 			AND a.sign_time BETWEEN #{beginSignTime} AND #{endSignTime}
 		</if>

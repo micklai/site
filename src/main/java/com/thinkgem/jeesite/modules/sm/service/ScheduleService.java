@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.sm.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,7 @@ public class ScheduleService extends CrudService<ScheduleDao, Schedule> {
 			}
 			if (ScheduleAttachment.DEL_FLAG_NORMAL.equals(scheduleAttachment.getDelFlag())){
 				if (StringUtils.isBlank(scheduleAttachment.getId())){
-					scheduleAttachment.setScheduleId(schedule);
+					scheduleAttachment.setSchedule(schedule);
 					scheduleAttachment.preInsert();
 					scheduleAttachmentDao.insert(scheduleAttachment);
 				}else{
@@ -70,5 +72,9 @@ public class ScheduleService extends CrudService<ScheduleDao, Schedule> {
 		super.delete(schedule);
 		scheduleAttachmentDao.delete(new ScheduleAttachment(schedule));
 	}
-	
+
+	public List<Schedule> findOwnList(Schedule schedule){
+		return super.findList(schedule);
+	}
+
 }

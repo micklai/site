@@ -43,6 +43,7 @@ public class UserUtils {
 	public static final String USER_CACHE_ID_ = "id_";
 	public static final String USER_CACHE_LOGIN_NAME_ = "ln";
 	public static final String USER_CACHE_LIST_BY_OFFICE_ID_ = "oid_";
+	public static final String USER_CACHE_ALL_AFFILIATION_BY_OFFICE_ID_ = "aaid";
 
 	public static final String CACHE_ROLE_LIST = "roleList";
 	public static final String CACHE_MENU_LIST = "menuList";

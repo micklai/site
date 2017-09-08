@@ -72,4 +72,10 @@ public interface UserDao extends CrudDao<User> {
 	 */
 	public int updateUserInfo(User user);
 
+	/**
+	 * 查找当前用户所管辖范围内的用户
+	 * @param user
+	 * @return
+	 */
+	public List<User> findAllAffiliationByOfficeId(User user);
 }

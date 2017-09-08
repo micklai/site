@@ -18,9 +18,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/sm/schedule/all/list">日程管理列表</a></li>
+		<li class="active"><a href="${ctx}/sm/schedule/own/list">日程管理列表</a></li>
+		<shiro:hasPermission name="sm:schedule:edit"><li><a href="${ctx}/sm/schedule/own/form">新增日程</a></li></shiro:hasPermission>
 	</ul>
-	<form:form id="searchForm" modelAttribute="schedule" action="${ctx}/sm/schedule/all/list" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="schedule" action="${ctx}/sm/schedule/own/list" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<inpit id="userId" name="user.id" type="hidden" value="${user.id}">
@@ -56,6 +57,7 @@
 				<th>日程完成状态</th>
 				<%--<th>是否自动考勤签到</th>--%>
 				<th>备注信息</th>
+				<shiro:hasPermission name="sm:schedule:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
@@ -98,6 +100,10 @@
 				<td>
 					${schedule.remarks}
 				</td>
+				<shiro:hasPermission name="sm:schedule:edit"><td>
+    				<a href="${ctx}/sm/schedule/own/form?id=${schedule.id}">修改</a>
+					<a href="${ctx}/sm/schedule/delete?id=${schedule.id}" onclick="return confirmx('确认要删除该日程吗？', this.href)">删除</a>
+				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
 		</tbody>
