@@ -25,9 +25,6 @@
 			<id property="attachmentType" column="scheduleAttachmentList.attachmentType" />
 			<id property="remarks" column="scheduleAttachmentList.remarks" />
 		</collection>
-		<collection property="officeList" ofType="Office">
-			<id property="id" column="officeList.id" />
-		</collection>
 	</resultMap>
     
 	<sql id="scheduleColumns">
