@@ -13,7 +13,6 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 考勤管理相关Entity
- *
  * @author lhc
  * @version 2017-08-22
  */
