@@ -27,6 +27,7 @@ public class SysPushMessage extends DataEntity<SysPushMessage> {
 	private String dataId;		// 消息对应具体数据id
 	private Office office;		// 推送目标机构名
 	private User user;		// 推送目标用户
+	private boolean isReceive;     //消息用户是否已经接受
 	
 	public SysPushMessage() {
 		super();
@@ -64,11 +65,11 @@ public class SysPushMessage extends DataEntity<SysPushMessage> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	public Date getMsgData() {
+	public Date getMsgDate() {
 		return msgDate;
 	}
 
-	public void setMsgData(Date msgData) {
+	public void setMsgDate(Date msgData) {
 		this.msgDate = msgData;
 	}
 	
@@ -98,5 +99,12 @@ public class SysPushMessage extends DataEntity<SysPushMessage> {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
+	public boolean isReceive() {
+		return isReceive;
+	}
+
+	public void setReceive(boolean receive) {
+		isReceive = receive;
+	}
 }

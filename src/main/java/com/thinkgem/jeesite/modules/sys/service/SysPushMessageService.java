@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.sys.service;
 
 import java.util.List;
 
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,19 @@ public class SysPushMessageService extends CrudService<SysPushMessageDao, SysPus
 	@Transactional(readOnly = false)
 	public void delete(SysPushMessage sysPushMessage) {
 		super.delete(sysPushMessage);
+	}
+
+	@Transactional
+	public void update(SysPushMessage sysPushMessage){dao.update(sysPushMessage);}
+
+	public List<SysPushMessage> findListByUserId(String userId){
+		SysPushMessage message = new SysPushMessage();
+		User user = new User();
+		user.setId(userId);
+		message.setUser(user);
+		List<SysPushMessage> list = dao.getNoReadByUserId(message);
+
+		return list;
 	}
 	
 }

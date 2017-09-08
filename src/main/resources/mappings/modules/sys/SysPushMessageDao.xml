@@ -16,7 +16,8 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		a.is_receive AS "isReceive"
 	</sql>
 	
 	<sql id="sysPushMessageJoins">
@@ -65,7 +66,19 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
+	<select id="getNoReadByUserId" resultType="SysPushMessage">
+		SELECT
+			<include refid="sysPushMessageColumns"/>
+		FROM sys_push_message a
+			<include refid="sysPushMessageJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		  AND a.push_user_id = #{user.id}
+		  AND (a.is_receive = 0 or a.is_receive is NULL )
+		ORDER BY a.create_date DESC
+
+	</select>
+
 	<insert id="insert">
 		INSERT INTO sys_push_message(
 			id,
@@ -81,7 +94,8 @@
 			update_by,
 			update_date,
 			remarks,
-			del_flag
+			del_flag,
+			is_receive
 		) VALUES (
 			#{id},
 			#{typeId},
@@ -96,7 +110,8 @@
 			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
-			#{delFlag}
+			#{delFlag},
+			0
 		)
 	</insert>
 	
@@ -111,7 +126,8 @@
 			push_user_id = #{user.id},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			is_receive = #{isReceive}
 		WHERE id = #{id}
 	</update>
 	

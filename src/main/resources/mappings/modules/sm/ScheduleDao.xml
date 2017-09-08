@@ -151,5 +151,22 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
+	<select id="findListByCondition" resultType="Schedule">
+		SELECT
+		<include refid="scheduleColumns"/>
+		FROM sm_schedule a
+		<include refid="scheduleJoins"/>
+		<where>
+			a.del_flag = '0'
+			<if test="userId != null and userId != ''">
+				AND a.user_id = #{userId}
+			</if>
+			<if test="downloadType == 'sub'">
+				AND a.user_id in (SELECT * FROM sys_user u3 WHERE u3.office_id = )
+			</if>
+			 ORDER BY a.update_date DESC limit #{pageNo},#{pageSize}
+		</where>
+
+	</select>
 </mapper>

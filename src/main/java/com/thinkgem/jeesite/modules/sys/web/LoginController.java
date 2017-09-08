@@ -3,11 +3,18 @@
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite.common.utils.*;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
+import com.thinkgem.jeesite.modules.sys.entity.SysPushMessage;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.SysPushMessageService;
+import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.web.util.WebUtils;
@@ -22,10 +29,6 @@ import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.security.shiro.session.SessionDAO;
 import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
-import com.thinkgem.jeesite.common.utils.CacheUtils;
-import com.thinkgem.jeesite.common.utils.CookieUtils;
-import com.thinkgem.jeesite.common.utils.IdGen;
-import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.security.FormAuthenticationFilter;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
@@ -172,6 +175,20 @@ public class LoginController extends BaseController{
 ////			request.getSession().setAttribute("aaa", "aa");
 ////		}
 //		System.out.println("==========================b");
+
+		SysPushMessageService sysPushMessageService = SpringContextHolder.getBean(SysPushMessageService.class);
+		SystemService systemService = SpringContextHolder.getBean(SystemService.class);
+		User user = systemService.getUser("0843fb308ee44c058dfc9437574bf294");
+		Office office = user.getOffice();
+		SysPushMessage message = new SysPushMessage();
+		message.setUser(user);
+		message.setOffice(office);
+		message.setMsgDate(new Date());
+		message.setMsgContent("李四明天上午去成都开会");
+		message.setTypeName("我的行程");
+		message.setTypeId("1");
+
+		sysPushMessageService.save(message);
 		return "modules/sys/sysIndex";
 	}
 	

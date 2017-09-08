@@ -7,6 +7,9 @@ import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.sm.entity.Schedule;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 日程管理类DAO接口
  * @author lhc
@@ -14,5 +17,5 @@ import com.thinkgem.jeesite.modules.sm.entity.Schedule;
  */
 @MyBatisDao
 public interface ScheduleDao extends CrudDao<Schedule> {
-	
+	public List<Schedule> findListByCondition(Map<String,Object> conditions);
 }

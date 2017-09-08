@@ -19,7 +19,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class ScheduleAttachment extends DataEntity<ScheduleAttachment> {
 	
 	private static final long serialVersionUID = 1L;
-	private Schedule scheduleId;		// 日程管理信息主表id 父类
+	private Schedule schedule;		// 日程管理信息主表id 父类
 	private User user;		// 用户id
 	private String attachmentName;		// 附件名称
 	private String attachmentPath;		// 附件路径
@@ -36,17 +36,17 @@ public class ScheduleAttachment extends DataEntity<ScheduleAttachment> {
 		super(id);
 	}
 
-	public ScheduleAttachment(Schedule scheduleId){
-		this.scheduleId = scheduleId;
+	public ScheduleAttachment(Schedule schedule){
+		this.schedule = schedule;
 	}
 
 	@Length(min=1, max=32, message="日程管理信息主表id长度必须介于 1 和 32 之间")
 	public Schedule getScheduleId() {
-		return scheduleId;
+		return schedule;
 	}
 
 	public void setScheduleId(Schedule scheduleId) {
-		this.scheduleId = scheduleId;
+		this.schedule = schedule;
 	}
 	
 	@NotNull(message="用户id不能为空")

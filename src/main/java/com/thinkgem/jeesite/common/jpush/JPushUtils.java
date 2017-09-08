@@ -5,10 +5,12 @@ import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
 import cn.jpush.api.JPushClient;
 import cn.jpush.api.push.PushResult;
+import cn.jpush.api.push.model.Message;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.SMS;
 import cn.jpush.api.push.model.audience.Audience;
+import cn.jpush.api.push.model.audience.AudienceTarget;
 import cn.jpush.api.push.model.notification.Notification;
 import com.thinkgem.jeesite.common.config.Global;
 import org.slf4j.Logger;
@@ -58,13 +60,21 @@ public class JPushUtils {
      * 构建推送对象：平台是 Android与ios，目标是 tag 为 tags 的设备，内容是 Android与ios 通知 ALERT，并且标题为 TITLE
      * @return PushPayload
      */
-    public static PushPayload buildPushObject_android_tag_alertWithTitle(String[] tags, String ALERT, String TITLE, Map<String,String> extras) {
+    public static PushPayload buildPushObject_androidAndIos_tags_alertWithMessage(String[] tags, String ALERT, String TITLE, Map<String,String> extras,String msgTitle,String msgContent) {
         return PushPayload.newBuilder()
                 .setPlatform(Platform.android_ios())
                 .setAudience(Audience.tag(tags))
                 .setNotification(Notification.android(ALERT, TITLE, extras))
+                .setMessage(Message.newBuilder()
+                            .setTitle(msgTitle)
+                            .setMsgContent(msgContent)
+                            .addExtras(extras)
+                            .build())
                 .build();
     }
+
+
+
 
     public void sendPush(PushPayload payload){
         jpushClient = this.getJpushClient();
@@ -109,7 +119,7 @@ public class JPushUtils {
 
     public static void main(String[] args){
         JPushUtils utils = new JPushUtils();
-        utils.sendPush(JPushUtils.buildPushObject_android_tag_alertWithTitle(new String[]{"0843fb308ee44c058dfc9437574bf294"},"明天上午十点大合仓开会","我的行程",new HashMap<String,String>()));
+        utils.sendPush(JPushUtils.buildPushObject_androidAndIos_tags_alertWithMessage(new String[]{"0843fb308ee44c058dfc9437574bf294"},"明天上午十点大合仓开会","我的行程",new HashMap<String,String>(),"这是消息标题","这是消息内容"));
         System.out.println("推送成功!");
     }
 }

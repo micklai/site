@@ -4,7 +4,7 @@
     
 	<sql id="scheduleAttachmentColumns">
 		a.id AS "id",
-		a.schedule_id AS "scheduleId",
+		a.schedule_id AS "schedule.id",
 		a.user_id AS "user.id",
 		a.attachment_name AS "attachmentName",
 		a.attachment_path AS "attachmentPath",
@@ -39,8 +39,8 @@
 		<include refid="scheduleAttachmentJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="scheduleId != null and scheduleId != ''">
-				AND a.schedule_id = #{scheduleId}
+			<if test="schedule != null and schedule.id != null and schedule.id != ''">
+				AND a.schedule_id = #{schedule.id}
 			</if>
 			<if test="user != null and user.id != null and user.id != ''">
 				AND a.user_id = #{user.id}
@@ -97,7 +97,7 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{scheduleId},
+			#{schedule.id},
 			#{user.id},
 			#{attachmentName},
 			#{attachmentPath},
@@ -114,7 +114,7 @@
 	
 	<update id="update">
 		UPDATE sm_schedule_attachment SET 	
-			schedule_id = #{scheduleId},
+			schedule_id = #{schedule.id},
 			user_id = #{user.id},
 			attachment_name = #{attachmentName},
 			attachment_path = #{attachmentPath},
@@ -134,7 +134,7 @@
 				WHERE id = #{id}
 			</when>
 			<otherwise>
-				WHERE schedule_id = #{scheduleId}
+				WHERE schedule_id = #{schedule.id}
 			</otherwise>
 		</choose>
 	</update>
