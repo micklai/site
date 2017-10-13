@@ -2,6 +2,8 @@
 
 ## 平台简介
 
+
+321
 JeeSite是基于多个优秀的开源项目，高度整合封装而成的高效，高性能，强安全性的**开源**Java EE快速开发平台。
 
 JeeSite本身是以Spring Framework为核心容器，Spring MVC为模型视图控制器，MyBatis为数据访问层，
